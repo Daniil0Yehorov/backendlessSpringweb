@@ -1,12 +1,17 @@
 package com.example.backendl.Controller;
 
+import com.backendless.Backendless;
 import com.backendless.BackendlessUser;
+import com.backendless.files.FileInfo;
 import com.example.backendl.bean.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 public class ControllerMain {
@@ -24,14 +29,5 @@ public class ControllerMain {
     public String forgottenpass(Model model){
         model.addAttribute("title", "forgotPage");
         return "forgot-password.html";}
-    @GetMapping("/MainforUser")
-    public String userf(Model model){
-        model.addAttribute("title", "User");
-        if(session.isPresent()){
-        BackendlessUser user=session.getUser();
-        model.addAttribute("user",  user);
-            return "MainforUser.html";
-        }
-        else { return "redirect:/";}
-       }
+
 }

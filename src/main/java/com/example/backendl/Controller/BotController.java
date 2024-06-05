@@ -2,12 +2,17 @@ package com.example.backendl.Controller;
 import com.backendless.*;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.files.BackendlessFile;
+import com.backendless.files.FileInfo;
+import com.backendless.files.FileOperation;
 import com.example.backendl.bean.HttpSession;
 import com.example.backendl.config.BackendlessConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //@RestController
 @Controller
@@ -28,9 +33,7 @@ public class BotController {
                            @RequestParam String login) {
         backendlessConfig.init();
         try {
-            System.out.println("Начало регистрации пользователя...");
-            System.out.println("Email: " + email);
-            System.out.println("Password: " + password);
+
             BackendlessUser user = new BackendlessUser();
             user.setEmail(email);
             user.setPassword(password);
@@ -43,10 +46,16 @@ public class BotController {
             BackendlessUser registeredUser = Backendless.UserService.register(user);
 
             if (registeredUser != null) {
-                System.out.println("Пользователь успешно зарегистрирован.");
-                return "Ви зареєстровані.";
+                // Створення папки та файлу sharewithme
+                String userFolderPath = "/user_directories/" + login + "/";
+                try {
+                    Backendless.Files.saveFile(userFolderPath, "shared_with_me.txt", new byte[0]);
+                } catch (BackendlessException e) {
+                    System.out.println("error: " + e.getMessage());
+                }
+                return "redirect:/loginpage";
             } else {
-                System.out.println("Ошибка регистрации пользователя.");
+                System.out.println("Erorr");
                 return "Провалена реєстрація.";
             }
         } catch (BackendlessException e) {
@@ -56,7 +65,7 @@ public class BotController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password) {
+    public String login(@RequestParam String email, @RequestParam String password, Model model) {
         backendlessConfig.init();
         try {
            BackendlessUser user=Backendless.UserService.login(email, password);
@@ -77,18 +86,6 @@ public class BotController {
             return "Помилка при відновленні паролю: " + e.getMessage();
         }
     }
-
-    @GetMapping("/current-user")
-    public String currentUser() {
-        backendlessConfig.init();
-        BackendlessUser currentUser = Backendless.UserService.CurrentUser();
-        if (currentUser != null) {
-            return "Поточний користувач: " + currentUser.getProperty("login");
-        } else {
-            return "Користувач не авторизований.";
-        }
-    }
-
     @GetMapping("/logout")
     public String logout() {
         backendlessConfig.init();

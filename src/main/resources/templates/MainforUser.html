@@ -7,7 +7,26 @@
 <body>
 <header>
     <h1>Welcome, <span th:text="${user.email}">User</span>!</h1>
-    <h2><a href="/api/logout">Logout<a/></h2>
+    <h2><a href="/api/logout">Logout<a/>\
 </header>
+<div>
+    <h2>User Files</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Size</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="fileInfo : ${fileList}">
+            <td th:text="${fileInfo.name}">File Name</td>
+            <td th:text="${fileInfo.size}">Size</td>
+            <td><a th:href="@{'/delete_File?filename=' + ${fileInfo.name}}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
