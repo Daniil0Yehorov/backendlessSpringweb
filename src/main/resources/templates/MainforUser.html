@@ -6,7 +6,8 @@
 </head>
 <body>
 <header>
-    <h1>Welcome, <span th:text="${user.login}">User</span>!</h1>
+    <h1>Welcome, <span th:text="${user.email}">User</span>!</h1>
+    <h2><a href="/api/logout">Logout<a/></h2>
 </header>
 </body>
 </html>

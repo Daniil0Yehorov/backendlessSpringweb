@@ -6,9 +6,11 @@ import com.example.backendl.bean.HttpSession;
 import com.example.backendl.config.BackendlessConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
+@Controller
 @AllArgsConstructor
 @RequestMapping("/api")
 public class BotController {
@@ -59,8 +61,7 @@ public class BotController {
         try {
            BackendlessUser user=Backendless.UserService.login(email, password);
            session.setUser(user);
-
-            return "redirect:/MainforUser";//not working fix it
+            return "redirect:/MainforUser";
         } catch (BackendlessException e) {
             return "Невдачна спроба: " + e.getMessage();
         }
@@ -88,12 +89,12 @@ public class BotController {
         }
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout() {
         backendlessConfig.init();
         try {
             Backendless.UserService.logout();
-            return "Ви вийшли з системи.";
+            return "redirect:/";
         } catch (BackendlessException e) {
             return "Помилка при виході з системи: " + e.getMessage();
         }

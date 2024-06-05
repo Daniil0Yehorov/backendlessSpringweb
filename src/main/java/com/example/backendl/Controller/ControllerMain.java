@@ -1,5 +1,6 @@
 package com.example.backendl.Controller;
 
+import com.backendless.BackendlessUser;
 import com.example.backendl.bean.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class ControllerMain {
     @GetMapping("/MainforUser")
     public String userf(Model model){
         model.addAttribute("title", "User");
-        model.addAttribute("user",session.getUser());
-        return "MainforUser.html";}
+        if(session.isPresent()){
+        BackendlessUser user=session.getUser();
+        model.addAttribute("user",  user);
+            return "MainforUser.html";
+        }
+        else { return "redirect:/";}
+       }
 }
