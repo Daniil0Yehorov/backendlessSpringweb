@@ -1,10 +1,16 @@
 package com.example.backendl.Controller;
 
+import com.example.backendl.bean.HttpSession;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 @Controller
+@AllArgsConstructor
 public class ControllerMain {
+    @Autowired
+    HttpSession session;
     @GetMapping("/")
     public String reg(Model model){
         model.addAttribute("title", "reg Page");
@@ -17,4 +23,9 @@ public class ControllerMain {
     public String forgottenpass(Model model){
         model.addAttribute("title", "forgotPage");
         return "forgot-password.html";}
+    @GetMapping("/MainforUser")
+    public String userf(Model model){
+        model.addAttribute("title", "User");
+        model.addAttribute("user",session.getUser());
+        return "MainforUser.html";}
 }

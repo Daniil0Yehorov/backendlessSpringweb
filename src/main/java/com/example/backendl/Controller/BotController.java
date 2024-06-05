@@ -1,17 +1,21 @@
 package com.example.backendl.Controller;
 import com.backendless.*;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.exceptions.BackendlessFault;
+import com.backendless.files.BackendlessFile;
+import com.example.backendl.bean.HttpSession;
 import com.example.backendl.config.BackendlessConfig;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class BotController {
 @Autowired
     public BackendlessConfig backendlessConfig;
-
+    @Autowired
+    private  final HttpSession session;
     @PostMapping("/register")
     public String register(@RequestParam String email,
                            @RequestParam String password,
@@ -53,8 +57,10 @@ public class BotController {
     public String login(@RequestParam String email, @RequestParam String password) {
         backendlessConfig.init();
         try {
-            Backendless.UserService.login(email, password);
-            return "Ви увійшли в систему.";
+           BackendlessUser user=Backendless.UserService.login(email, password);
+           session.setUser(user);
+
+            return "redirect:/MainforUser";//not working fix it
         } catch (BackendlessException e) {
             return "Невдачна спроба: " + e.getMessage();
         }
