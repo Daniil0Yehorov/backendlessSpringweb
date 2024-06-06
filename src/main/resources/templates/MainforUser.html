@@ -7,7 +7,7 @@
 <body>
 <header>
     <h1>Welcome, <span th:text="${user.email}">User</span>!</h1>
-    <h2><a href="/api/logout">Logout<a/>\
+    <h2><a href="/api/logout">Logout</a></h2>
 </header>
 <div>
     <h2>User Files</h2>
@@ -23,10 +23,23 @@
         <tr th:each="fileInfo : ${fileList}">
             <td th:text="${fileInfo.name}">File Name</td>
             <td th:text="${fileInfo.size}">Size</td>
-            <td><a th:href="@{'/delete_File?filename=' + ${fileInfo.name}}">Delete</a></td>
+            <td><a th:href="@{'/delete_File?filename=' + ${fileInfo.name}}">Delete</a>
+                <form action="/shareFile" method="post" style="display:inline;">
+                    <input type="hidden" name="filename" th:value="${fileInfo.name}">
+                    <input type="text" name="targetUser" placeholder="User email">
+                    <button type="submit">Share</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
+</div>
+<div>
+    <h2>Upload File</h2>
+    <form method="post" enctype="multipart/form-data" th:action="@{/uploadFile}">
+        <input type="file" name="file"/>
+        <button type="submit">Upload</button>
+    </form>
 </div>
 </body>
 </html>

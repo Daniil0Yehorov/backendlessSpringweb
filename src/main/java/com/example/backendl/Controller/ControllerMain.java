@@ -1,8 +1,5 @@
 package com.example.backendl.Controller;
 
-import com.backendless.Backendless;
-import com.backendless.BackendlessUser;
-import com.backendless.files.FileInfo;
 import com.example.backendl.bean.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
 
 @Controller
 @AllArgsConstructor

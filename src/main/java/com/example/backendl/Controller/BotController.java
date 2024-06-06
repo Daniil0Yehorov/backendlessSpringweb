@@ -1,9 +1,6 @@
 package com.example.backendl.Controller;
 import com.backendless.*;
 import com.backendless.exceptions.BackendlessException;
-import com.backendless.files.BackendlessFile;
-import com.backendless.files.FileInfo;
-import com.backendless.files.FileOperation;
 import com.example.backendl.bean.HttpSession;
 import com.example.backendl.config.BackendlessConfig;
 import lombok.AllArgsConstructor;
@@ -12,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
-//@RestController
 @Controller
 @AllArgsConstructor
 @RequestMapping("/api")
@@ -47,9 +42,9 @@ public class BotController {
 
             if (registeredUser != null) {
                 // Створення папки та файлу sharewithme
-                String userFolderPath = "/user_directories/" + login + "/";
+                String userFolderPath = "/user_directories/" + login + "/shared_with_me/";
                 try {
-                    Backendless.Files.saveFile(userFolderPath, "shared_with_me.txt", new byte[0]);
+                    Backendless.Files.saveFile(userFolderPath, "test.txt", new byte[0]);
                 } catch (BackendlessException e) {
                     System.out.println("error: " + e.getMessage());
                 }
