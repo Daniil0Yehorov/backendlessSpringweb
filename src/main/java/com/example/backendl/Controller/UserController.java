@@ -160,7 +160,7 @@ public class UserController {
             String userLogin = (String) session.getUser().getProperty("login");
             String filename = file.getOriginalFilename();
 
-            String userDirectory = "/user_directories/" + userLogin + "/user_avatars/" + filename;
+            String userDirectory = "/user_directories/" + userLogin + "/user_avatars/";
 
             File tempFile = File.createTempFile("upload", filename);
             try (FileOutputStream fos = new FileOutputStream(tempFile)) {

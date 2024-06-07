@@ -33,7 +33,8 @@
   </form>
 </div>
 </body>
-<script> /*function sendLocationToBackendless() {
+<script>
+  function sendLocationToBackendless() {
 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -67,6 +68,6 @@
 window.onload = function() {
   sendLocationToBackendless(); //onload window
   setInterval(sendLocationToBackendless, 60000); // every minute
-};*/
+};
 </script>
 </html>
