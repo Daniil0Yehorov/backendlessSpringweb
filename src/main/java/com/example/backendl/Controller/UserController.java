@@ -17,7 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @Controller
@@ -113,7 +116,6 @@ public class UserController {
         if (session.isPresent()) {
             BackendlessUser user = session.getUser();
             GeoPoint geoPoint = new GeoPoint(latitude, longitude);
-
             String wktString = "POINT(" + longitude + " " + latitude + ")";
             user.setProperty("myLocation", wktString);
 
@@ -133,7 +135,6 @@ public class UserController {
     public String uploadAvatar(@RequestParam("file") MultipartFile file) {
         if (session.isPresent()) {
             BackendlessUser user = session.getUser();
-
             try {
                 String fileUrl = uploadFileToBackendless(file);
 
@@ -152,6 +153,7 @@ public class UserController {
         } else {
             return "redirect:/login";
         }
+
     }
 
     // Метод для завантаження файлу на сервер Backendless

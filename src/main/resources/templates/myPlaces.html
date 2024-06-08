@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Places</title>
+</head>
+<a href="/MainforUser">back to profile</a>
+<body>
+<h1>My Places</h1>
+<form th:action="@{/places/add}" method="post">
+  <label for="description">Description:</label>
+  <input type="text" id="description" name="description" required>
+  <label for="latitude">Latitude:</label>
+  <input type="text" id="latitude" name="latitude" >
+  <label for="longitude">Longitude:</label>
+  <input type="text" id="longitude" name="longitude">
+  <label for="hashtag">Hashtag:</label>
+  <input type="text" id="hashtag" name="hashtag" required>
+  <label for="imageUrl">Image URL:</label>
+  <input type="text" id="imageUrl" name="imageUrl" required>
+  <button type="submit">Add Place</button>
+</form>
+
+<ul>
+  <li th:if="${places != null}" th:each="place : ${places}">
+    <span th:text="${place.description}"></span>
+    <span th:text="${place.location}"></span>
+    Hashtags:
+    <span th:text="${place.hashtag}"></span>
+    <form th:action="@{/places/delete}" method="post">
+      <input type="hidden" name="objectId" th:value="${place.objectId}">
+      <button type="submit">Delete</button>
+    </form>
+  </li>
+  <li th:if="${places == null}">
+    No places found.
+  </li>
+</ul>
+
+<h2>Find Place</h2>
+<form th:action="@{/places/find}" method="get">
+  <label for="query">Search:</label>
+  <input type="text" id="query" name="query">
+  <button type="submit">Find</button>
+</form>
+</body>
+</html>
