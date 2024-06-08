@@ -20,7 +20,7 @@ public class ControllerMain {
     @GetMapping("/")
     public String reg(Model model){
         model.addAttribute("title", "reg Page");
-        //add table Places
+        //додавання до бекендлессу таблиці
         HashMap Place=new HashMap();
         Place.put("description", "");
         Place.put("location",  "");

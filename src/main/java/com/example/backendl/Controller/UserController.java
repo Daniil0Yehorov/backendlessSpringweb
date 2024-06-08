@@ -6,7 +6,6 @@ import com.backendless.exceptions.BackendlessException;
 import com.backendless.files.FileInfo;
 import com.backendless.geo.GeoPoint;
 import com.example.backendl.bean.HttpSession;
-import com.example.backendl.config.BackendlessConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,11 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 @AllArgsConstructor
 @Controller
 public class UserController {
