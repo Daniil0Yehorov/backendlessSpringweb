@@ -84,7 +84,8 @@ public class PlacesController {
     public String findPlace(@RequestParam String query, Model model) {
         if (session.isPresent()) {
             BackendlessUser user = session.getUser();
-            String whereClause = "ownerId = '" + user.getObjectId() + "' AND description LIKE '%" + query + "%'";
+            //all places find
+            String whereClause = "description LIKE '%" + query + "%'";
             DataQueryBuilder queryBuilder = DataQueryBuilder.create();
             queryBuilder.setWhereClause(whereClause);
             List<Place> places = Backendless.Data.of(Place.class).find(queryBuilder);
