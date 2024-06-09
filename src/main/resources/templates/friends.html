@@ -8,10 +8,14 @@
 <body>
 <h1>Friends</h1>
 <ul>
-  <li th:if="${users != null}" th:each="user : ${users}">
+  <li th:if="${users != null}" th:each="user, stat : ${users}">
     <span th:text="${user.email}"></span>
+    <span th:text="${friends[stat.index].friendStatus}"></span>
     <form th:action="@{/friends/delete/{friendId}(friendId=${user.objectId})}" method="post">
       <button type="submit">Delete</button>
+    </form>
+    <form th:action="@{/friends/confirm/{friendId}(friendId=${user.objectId})}" method="post">
+      <button type="submit">Confirm</button>
     </form>
   </li>
   <li th:if="${users == null || users.isEmpty()}">

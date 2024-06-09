@@ -7,7 +7,7 @@ public class Friend {
     private Date created;
     private String OwnerId;
     private String OwnersFriendId;
-    private  String FriendStatus;//підтверджено, відклонено, очікування
+    private  String FriendStatus;
 
     public String getObjectId() {
         return objectId;

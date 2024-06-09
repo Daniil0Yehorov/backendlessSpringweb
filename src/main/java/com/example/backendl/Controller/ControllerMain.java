@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 
 @Controller
-@AllArgsConstructorhttps://github.com/Daniil0Yehorov/backendlessSpringweb/blob/master/src/main/java/com/example/backendl/Controller/ControllerMain.java
+@AllArgsConstructor
 public class ControllerMain {
     @Autowired
     HttpSession session;
@@ -29,9 +29,8 @@ public class ControllerMain {
         Place.put("imageUrl", "imageUrl");
         Place.put("ownerId", "id");
 
-       HashMap Friend=new HashMap();
+        HashMap Friend=new HashMap();
         Friend.put("created", new Date());
-        Friend.put("imageUrl", "imageUrl");
         Friend.put("ownerId", "OwnerId");
         Friend.put("OwnersFriendId", "OwnersFriendId");
         Friend.put("FriendStatus","FriendStatus");

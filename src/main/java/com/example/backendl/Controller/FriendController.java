@@ -77,7 +77,7 @@ public class FriendController {
                     friend.setOwnerId(currentUser.getObjectId());
                     friend.setOwnersFriendId(friendUser.getObjectId());
                     friend.setCreated(new Date());
-                   // friend.setFriendStatus("pending");
+                    friend.setFriendStatus("pending");
                     Backendless.Data.of(Friend.class).save(friend);
                 }
             }
@@ -92,7 +92,7 @@ public class FriendController {
         if (session.isPresent()) {
             Friend friend = Backendless.Data.of(Friend.class).findById(friendId);
             if (friend != null && friend.getFriendStatus().equals("pending")) {
-                //friend.setFriendStatus("confirmed");
+                friend.setFriendStatus("confirmed");
                 Backendless.Data.of(Friend.class).save(friend);
             }
         }
@@ -110,7 +110,7 @@ public class FriendController {
             return null;
         }
     }
-    // додати того ж іншого друга не можна
+    // додати того ж  друга не можна
     private boolean isFriendAlreadyAdded(String ownerId, String ownersFriendId) {
         String whereClause = "OwnerId = '" + ownerId + "' AND OwnersFriendId = '" + ownersFriendId + "'";
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
