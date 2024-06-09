@@ -1,6 +1,7 @@
 package com.example.backendl.Controller;
 import com.backendless.*;
 import com.backendless.exceptions.BackendlessException;
+import com.backendless.logging.Logger;
 import com.example.backendl.bean.HttpSession;
 import com.example.backendl.config.BackendlessConfig;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class BotController {
 @Autowired
     public BackendlessConfig backendlessConfig;
+    private static final Logger logger = Backendless.Logging.getLogger(BotController.class);
+
     @Autowired
     private  final HttpSession session;
     @PostMapping("/register")
@@ -63,10 +66,12 @@ public class BotController {
     public String login(@RequestParam String email, @RequestParam String password, Model model) {
         backendlessConfig.init();
         try {
+            logger.info("Спроба авторизації користувача з email: " + email+"та password"+password);
            BackendlessUser user=Backendless.UserService.login(email, password);
            session.setUser(user);
             return "redirect:/MainforUser";
         } catch (BackendlessException e) {
+            logger.error("Помилка авторизації користувача з email: " + email, e);
             return "Невдачна спроба: " + e.getMessage();
         }
     }

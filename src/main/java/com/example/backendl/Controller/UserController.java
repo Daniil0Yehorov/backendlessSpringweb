@@ -5,6 +5,7 @@ import com.backendless.BackendlessUser;
 import com.backendless.exceptions.BackendlessException;
 import com.backendless.files.FileInfo;
 import com.backendless.geo.GeoPoint;
+import com.backendless.logging.Logger;
 import com.example.backendl.bean.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ import java.util.List;
 public class UserController {
 @Autowired
     HttpSession session;
-    //удаление файла в корневой папке пользователя
+
+    private  static final Logger logger =  Backendless.Logging.getLogger(UserController.class);
     @RequestMapping(value = "/delete_File", method = {RequestMethod.GET, RequestMethod.POST})
     public String deleteFile(@RequestParam String filename){
     String userLogin = (String) session.getUser().getProperty("login");
@@ -52,14 +54,18 @@ public class UserController {
         String userLogin = (String) session.getUser().getProperty("login");
         String userDirectory = "/user_directories/" + userLogin + "/";
 
-        File tempFile = File.createTempFile("upload", file.getOriginalFilename());
-        try (FileOutputStream fos = new FileOutputStream(tempFile)) {
-            fos.write(file.getBytes());
+        try {
+            File tempFile = File.createTempFile("upload", file.getOriginalFilename());
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(file.getBytes());
+            }
+            Backendless.Files.upload(tempFile, userDirectory);
+            tempFile.delete();
+            logger.info("Файл успішно завантажено: " + file.getOriginalFilename());
+        } catch (Exception e) {
+            logger.error("Помилка завантаження файлу: " + file.getOriginalFilename(), e);
         }
 
-        Backendless.Files.upload(tempFile, userDirectory);
-
-        tempFile.delete();
 
         return "redirect:/MainforUser";
     }
@@ -72,9 +78,10 @@ public class UserController {
                 String userFolderName = targetUser.replace("@", "_").replace(".", "_");
                 String sharedWithMeFolderPath = "/user_directories/"  +user.getProperty("login")+ "/shared_with_me/"+ userFolderName;
                 Backendless.Files.saveFile(sharedWithMeFolderPath,userFolderName+".txt", new byte[0]);
+                logger.info("Файл успішно поділений з користувачем: " + targetUser);
             }
         } catch (BackendlessException e) {
-            System.err.println("Error sharing file: " + e.getMessage());
+            logger.error("Помилка поділу файлу з користувачем: " + targetUser, e);
         }
         return "redirect:/MainforUser";
     }
@@ -116,12 +123,12 @@ public class UserController {
 
             try {
                 Backendless.UserService.update(user);
-                System.out.println("Location updated successfully.");
+                logger.info("Локацію користувача оновлено: " + wktString);
             } catch (BackendlessException e) {
-                System.err.println("Error updating location: " + e.getMessage());
+                logger.error("Помилка оновлення локації користувача: " + wktString, e);
             }
         } else {
-            System.err.println("Error: User session is not present.");
+            logger.error("Помилка: Сесія користувача не знайдена.");
         }
         return "redirect:/profile";
     }
@@ -168,9 +175,10 @@ public class UserController {
             } finally {
                 tempFile.delete();
             }
+            logger.info("Файл успішно завантажено на Backendless: " + filename);
             return userDirectory;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            logger.error("Помилка завантаження файлу на Backendless.", e);
             return null;
         }
     }

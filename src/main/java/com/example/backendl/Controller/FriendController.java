@@ -98,7 +98,7 @@ public class FriendController {
         }
         return "redirect:/friends";
     }
-//отримання користувача за поштою
+    //отримання користувача за поштою
     private BackendlessUser getUserByEmail(String email) {
         String whereClause = "email = '" + email + "'";
         DataQueryBuilder queryBuilder = DataQueryBuilder.create();
@@ -118,5 +118,4 @@ public class FriendController {
         List<Friend> existingFriends = Backendless.Data.of(Friend.class).find(queryBuilder);
         return !existingFriends.isEmpty();
     }
-
 }
