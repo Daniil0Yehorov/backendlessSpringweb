@@ -28,7 +28,14 @@ public class ControllerMain {
         Place.put("created", new Date());
         Place.put("imageUrl", "imageUrl");
         Place.put("ownerId", "id");
-        Backendless.Data.of("Place").save(Place);
+
+        HashMap Friend=new HashMap();
+        Place.put("created", new Date());
+        Place.put("imageUrl", "imageUrl");
+        Place.put("ownerId", "OwnerId");
+        Place.put("ownerId", "OwnersFriendId");
+       // Place.put("FriendStatus","FriendStatus");
+        Backendless.Data.of("Friend").save(Friend);
         return "index.html";}
     @GetMapping("/loginpage")
     public String log(Model model){
