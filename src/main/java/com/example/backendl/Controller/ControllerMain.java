@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 
 @Controller
-@AllArgsConstructor
+@AllArgsConstructorhttps://github.com/Daniil0Yehorov/backendlessSpringweb/blob/master/src/main/java/com/example/backendl/Controller/ControllerMain.java
 public class ControllerMain {
     @Autowired
     HttpSession session;
@@ -33,7 +33,7 @@ public class ControllerMain {
         Place.put("created", new Date());
         Place.put("imageUrl", "imageUrl");
         Place.put("ownerId", "OwnerId");
-        Place.put("ownerId", "OwnersFriendId");
+        Place.put("OwnersFriendId", "OwnersFriendId");
        // Place.put("FriendStatus","FriendStatus");
         Backendless.Data.of("Friend").save(Friend);
         return "index.html";}
