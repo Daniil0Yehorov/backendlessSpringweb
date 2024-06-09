@@ -29,12 +29,12 @@ public class ControllerMain {
         Place.put("imageUrl", "imageUrl");
         Place.put("ownerId", "id");
 
-        HashMap Friend=new HashMap();
-        Place.put("created", new Date());
-        Place.put("imageUrl", "imageUrl");
-        Place.put("ownerId", "OwnerId");
-        Place.put("OwnersFriendId", "OwnersFriendId");
-       // Place.put("FriendStatus","FriendStatus");
+       HashMap Friend=new HashMap();
+        Friend.put("created", new Date());
+        Friend.put("imageUrl", "imageUrl");
+        Friend.put("ownerId", "OwnerId");
+        Friend.put("OwnersFriendId", "OwnersFriendId");
+        Friend.put("FriendStatus","FriendStatus");
         Backendless.Data.of("Friend").save(Friend);
         return "index.html";}
     @GetMapping("/loginpage")
