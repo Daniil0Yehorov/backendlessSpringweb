@@ -35,6 +35,7 @@ public class ControllerMain {
         Friend.put("OwnersFriendId", "OwnersFriendId");
         Friend.put("FriendStatus","FriendStatus");
         Backendless.Data.of("Friend").save(Friend);
+
         return "index.html";}
     @GetMapping("/loginpage")
     public String log(Model model){

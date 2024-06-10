@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @Controller
 @AllArgsConstructor
@@ -75,7 +77,6 @@ public class BotController {
             return "Невдачна спроба: " + e.getMessage();
         }
     }
-
     @PostMapping("/restore-password")
     public String restorePassword(@RequestParam String email) {
         backendlessConfig.init();
